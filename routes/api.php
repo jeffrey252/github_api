@@ -42,3 +42,5 @@ Route::group([
 ], function() {
     Route::get('github', [GithubController::class, 'view']);
 });
+
+Route::get('github', [GithubController::class, 'view']);
