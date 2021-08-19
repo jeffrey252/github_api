@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;use Illuminate\Http\Request;
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;

@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\GithubController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,4 +31,14 @@ Route::group([
         Route::get('logout', [AuthController::class, 'logout']);
         Route::get('user', [AuthController::class, 'user']);
     });
+});
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::get('github?{users}', [GithubController::class, 'view']);
+});
+
+Route::group([
+    'middleware' => (['auth:api'])
+], function() {
+    Route::get('github', [GithubController::class, 'view']);
 });
