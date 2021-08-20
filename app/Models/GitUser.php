@@ -2,21 +2,25 @@
 
 namespace App\Models;
 
-class GitUser
+use App\Models\Abstracts\Model;
+
+class GitUser extends Model
 {
-    protected $fillable = [
+    public $fillable = [
         'name',
         'login',
         'company',
         'followers',
-        'publicRepositoryCount',
+        'publicRepos',
     ];
 
     public function __construct($data)
     {
-        foreach($data AS $key => $value) {
-            if(in_array($key, $this->fillable)) {
+        foreach ($data AS $key => $value) {
+            if (in_array($key, $this->fillable)) {
                 $this->$key = $value;
+            } elseif ($key === 'public_repos') {
+                $this->publicRepos = $value;
             }
         }
     }

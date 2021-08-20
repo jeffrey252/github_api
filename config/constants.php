@@ -3,7 +3,7 @@
 return [
     'gitUsers' => [
         'gitApiUrl' => 'https://api.github.com/users/',
-        'redisUserDataExpiry' => 20,
+        'redisUserDataExpiry' => 50,
         'redisUserKeyPrefix' => 'user:',
     ],
 ];
