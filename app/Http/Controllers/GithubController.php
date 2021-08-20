@@ -17,7 +17,7 @@ class GithubController extends Controller
 
     public function view(Request $request)
     {
-        $data = $request->all();
+        $data = $request->json()->all();
         return $this->repo->find($data['names']);
         /*$url = 'https://api.github.com/users/';
         $data = $request->all();

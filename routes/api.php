@@ -38,9 +38,9 @@ Route::middleware(['auth:api'])->group(function () {
 });
 
 Route::group([
-    'middleware' => (['auth:api'])
+    'middleware' => (['auth:api', 'jsonbody'])
 ], function() {
     Route::get('github', [GithubController::class, 'view']);
 });
 
-Route::get('github', [GithubController::class, 'view']);
+Route::get('github', [GithubController::class, 'view'])->middleware(['jsonbody']);
