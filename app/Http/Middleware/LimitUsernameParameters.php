@@ -16,16 +16,15 @@ class LimitUsernameParameters
      */
     public function handle(Request $request, Closure $next)
     {
-        $jsonBody = $request->json()->all();
-        if (
-            isset($jsonBody['names'])
-            && count($jsonBody['names']) > config('constants.gitUsers.usernameParametersLimit')
-        ) {
-            return response()->json([
-                'message' => 'The request have too much username parameters. Maximum is 10',
-            ], 400);
-        } else {
-            return $next($request);
+        $jsonBody = $request->all();
+        if (isset($jsonBody['names'])) {
+            $usernames = explode(',', $jsonBody['names']);
+            if (count($usernames) > config('constants.gitUsers.usernameParametersLimit')) {
+                return response()->json([
+                    'message' => 'The request have too much username parameters. Maximum is 10',
+                ], 400);
+            }
         }
+        return $next($request);
     }
 }

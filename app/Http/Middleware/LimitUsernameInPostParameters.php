@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class EnsureJsonBodyIsPresent
+class LimitUsernameInPostParameters
 {
     /**
      * Handle an incoming request.
@@ -16,13 +16,11 @@ class EnsureJsonBodyIsPresent
      */
     public function handle(Request $request, Closure $next)
     {
-        $jsonBody = $request->json()->all();
-        if (empty($jsonBody) || !isset($jsonBody['names'])) {
+        if (count($request->all()) > config('constants.gitUsers.usernameParametersLimit')) {
             return response()->json([
-                'message' => 'The request does not have a valid JSON body. Please send a JSON body with a `names` key that is an array of all the usernames for your request.',
+                'message' => 'The request have too much username parameters. Maximum is 10',
             ], 400);
-        } else {
-            return $next($request);
         }
+        return $next($request);
     }
 }

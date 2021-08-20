@@ -63,7 +63,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'jsonbody' => \App\Http\Middleware\EnsureJsonBodyIsPresent::class,
+        'nameParameter' => \App\Http\Middleware\EnsureNameParameterIsPresent::class,
         'usernameLimit' => \App\Http\Middleware\LimitUsernameParameters::class,
+        'postUsernameLimit' => \App\Http\Middleware\LimitUsernameInPostParameters::class,
     ];
 }

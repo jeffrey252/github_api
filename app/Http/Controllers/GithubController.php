@@ -14,10 +14,17 @@ class GithubController extends Controller
         $this->repo = $memberRepo;
     }
 
-    public function view(Request $request)
+    public function findUsers(Request $request)
     {
-        $data = $request->json()->all();
-        $githubUsers = $this->repo->findGitUsers($data['names']);
+        $data = $request->all();
+        $usernames = explode(',', $data['names']);
+        $githubUsers = $this->repo->findGitUsers($usernames);
+        return $githubUsers;
+    }
+
+    public function findGitUsers(Request $request)
+    {
+        $githubUsers = $this->repo->findGitUsers($request->all());
         return $githubUsers;
     }
 }
