@@ -4,7 +4,6 @@ namespace App\Repositories\GitUsers;
 
 use App\Repositories\GitUsers\Interfaces\GitUserRepository;
 use App\Repositories\GitUsers\Interfaces\CacheRepository;
-use App\Repositories\GitUsers\Interfaces\ApiRepository;
 use App\Http\Resources\GitUserCollection;
 use App\Models\GitUser;
 
@@ -13,36 +12,31 @@ class CachedGitUserRepository implements GitUserRepository
     protected $cache;
     protected $apiRepo;
 
-    private $usersForApiRepo = [];
+    private $usersForRepoAccess = [];
     private $gitUserData = [];
 
-    public function __construct(CacheRepository $cacheRepository, GitUserRepository $apiRepository)
+    public function __construct(CacheRepository $cacheRepository, GitUserRepository $repository)
     {
         $this->cache = $cacheRepository;
-        $this->apiRepo = $apiRepository;
+        $this->repository = $repository;
     }
 
-    public function find($githubUsers)
+    public function findGitUsers(array $usernames): GitUserCollection
     {
-        foreach ($githubUsers as $githubUser) {
-            $githubUserData = $this->cache->find($githubUser);
-            if (empty($githubUserData)) {
-                $this->usersForApiRepo[] = $githubUser;
+        foreach ($usernames as $username) {
+            $cachedUserData = $this->cache->find($username);
+            if (empty($cachedUserData)) {
+                $this->usersForRepoAccess[] = $username;
             } else {
-                $this->gitUserData[] = new GitUser(json_decode($githubUserData));
+                $this->gitUserData[] = $cachedUserData;
             }
         }
-        $this->fetchFromApiRepository($this->usersForApiRepo);
-        $collection = new GitUserCollection($this->gitUserData);
-        return $collection;
-    }
-
-    public function fetchFromApiRepository($usersForApiRepo)
-    {
-        $userDataFromApi = $this->apiRepo->find($usersForApiRepo);
+        $userDataFromApi = $this->repository->findGitUsers($this->usersForRepoAccess);
         foreach ($userDataFromApi as $user => $userData) {
-            $this->cache->save($user, $userData->toJson());
+            $this->cache->save($user, $userData);
             $this->gitUserData[] = $userData;
         }
+        $collection = new GitUserCollection($this->gitUserData);
+        return $collection;
     }
 }

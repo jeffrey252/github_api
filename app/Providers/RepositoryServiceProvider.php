@@ -4,9 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\GitUsers\Interfaces\GitUserRepository;
-use App\Repositories\GitUsers\Interfaces\ApiRepository;
 use App\Repositories\GitUsers\CachedGitUserRepository;
-use App\Repositories\GitUsers\Interfaces\CacheRepository;
 use App\Repositories\GitUsers\RedisGitUserRepository;
 use App\Repositories\GitUsers\GuzzleGitUserRepository;
 

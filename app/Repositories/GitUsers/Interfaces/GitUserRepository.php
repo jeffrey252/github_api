@@ -2,7 +2,9 @@
 
 namespace App\Repositories\GitUsers\Interfaces;
 
+use App\Http\Resources\GitUserCollection;
+
 interface GitUserRepository
 {
-    public function find($data);
+    public function findGitUsers(array $data): GitUserCollection;
 }
