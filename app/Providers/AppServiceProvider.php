@@ -3,6 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Interfaces\MemberRepository;
+use App\Repositories\CachedMemberRepository;
+use App\Repositories\Interfaces\CacheRepository;
+use App\Repositories\RedisRepository;
+use App\Repositories\Interfaces\Repository;
+use App\Repositories\ApiMemberRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app->bind(MemberRepository::class, CachedMemberRepository::class);
+        $this->app->bind(CacheRepository::class, RedisRepository::class);
+        $this->app->bind(Repository::class, ApiMemberRepository::class);
     }
 }
