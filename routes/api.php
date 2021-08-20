@@ -24,10 +24,10 @@ Route::group([
 ], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('signup', [AuthController::class, 'signup']);
-  
+
     Route::group([
-      'middleware' => 'auth:api'
-    ], function() {
+        'middleware' => 'auth:api'
+    ], function () {
         Route::get('logout', [AuthController::class, 'logout']);
         Route::get('user', [AuthController::class, 'user']);
     });
@@ -38,9 +38,7 @@ Route::middleware(['auth:api'])->group(function () {
 });
 
 Route::group([
-    'middleware' => (['auth:api', 'jsonbody'])
-], function() {
+    'middleware' => (['auth:api', 'jsonbody', 'usernameLimit'])
+], function () {
     Route::get('github', [GithubController::class, 'view']);
 });
-
-Route::get('github', [GithubController::class, 'view'])->middleware(['jsonbody']);

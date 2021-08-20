@@ -10,9 +10,9 @@ class RedisGitUserRepository implements CacheRepository
 {
     public function find($gitUsername)
     {
-        $gitUserData = Redis::get(config('constants.gitUsers.redisUserKeyPrefix').$gitUsername);
+        $gitUserData = Redis::get(config('constants.gitUsers.redisUserKeyPrefix') . $gitUsername);
         if (!empty($gitUserData)) {
-            Log::channel('api')->info('Redis Cache accessed for user: '.$gitUsername);
+            Log::channel('api')->info('Redis Cache accessed for user: ' . $gitUsername);
         }
         return $gitUserData;
     }
@@ -20,7 +20,7 @@ class RedisGitUserRepository implements CacheRepository
     public function save($gitUsername, $gitUserData)
     {
         Redis::set(
-            config('constants.gitUsers.redisUserKeyPrefix').$gitUsername,
+            config('constants.gitUsers.redisUserKeyPrefix') . $gitUsername,
             $gitUserData,
             'EX',
             config('constants.gitUsers.redisUserDataExpiry')

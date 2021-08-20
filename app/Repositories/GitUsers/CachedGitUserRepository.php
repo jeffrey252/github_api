@@ -23,10 +23,10 @@ class CachedGitUserRepository implements GitUserRepository
 
     public function find($githubUsers)
     {
-        foreach ($githubUsers AS $githubUser) {
+        foreach ($githubUsers as $githubUser) {
             $githubUserData = $this->cache->find($githubUser);
             if (empty($githubUserData)) {
-                $this->usersForApiRepo[] = $githubUser;    
+                $this->usersForApiRepo[] = $githubUser;
             } else {
                 $this->gitUserData[] = json_decode($githubUserData);
             }
@@ -39,7 +39,7 @@ class CachedGitUserRepository implements GitUserRepository
     public function fetchFromApiRepository($usersForApiRepo)
     {
         $userDataFromApi = $this->apiRepo->find($usersForApiRepo);
-        foreach ($userDataFromApi AS $user => $userData) {
+        foreach ($userDataFromApi as $user => $userData) {
             $this->cache->save($user, $userData->toJson());
             $this->gitUserData[] = $userData;
         }

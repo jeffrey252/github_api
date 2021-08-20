@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'jsonbody' => \App\Http\Middleware\EnsureJsonBodyIsPresent::class,
+        'usernameLimit' => \App\Http\Middleware\LimitUsernameParameters::class,
     ];
 }

@@ -30,7 +30,6 @@ class RepositoryServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->bind(GitUserRepository::class, CachedGitUserRepository::class);
-        
         $this->app->bind(CacheRepository::class, RedisGitUserRepository::class);
         $this->app->bind(ApiRepository::class, GuzzleGitUserRepository::class);
     }

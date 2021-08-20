@@ -8,7 +8,7 @@ abstract class Model
 
     public function __construct($data)
     {
-        foreach ($data AS $key => $value) {
+        foreach ($data as $key => $value) {
             if (in_array($key, $this->fillable)) {
                 $this->$key = $value;
             }
