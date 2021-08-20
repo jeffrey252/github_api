@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Abstracts\Model;
+use Illuminate\Database\Eloquent\Model;
 
 class GitUser extends Model
 {

@@ -42,3 +42,9 @@ Route::group([
 ], function () {
     Route::get('github', [GithubController::class, 'view']);
 });
+
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Endpoint not found.',
+    ], 404);
+});

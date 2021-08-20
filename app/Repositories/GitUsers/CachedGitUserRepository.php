@@ -5,7 +5,8 @@ namespace App\Repositories\GitUsers;
 use App\Repositories\GitUsers\Interfaces\GitUserRepository;
 use App\Repositories\GitUsers\Interfaces\CacheRepository;
 use App\Repositories\GitUsers\Interfaces\ApiRepository;
-
+use App\Http\Resources\GitUserCollection;
+use App\Models\GitUser;
 
 class CachedGitUserRepository implements GitUserRepository
 {
@@ -15,7 +16,7 @@ class CachedGitUserRepository implements GitUserRepository
     private $usersForApiRepo = [];
     private $gitUserData = [];
 
-    public function __construct(CacheRepository $cacheRepository, ApiRepository $apiRepository)
+    public function __construct(CacheRepository $cacheRepository, GitUserRepository $apiRepository)
     {
         $this->cache = $cacheRepository;
         $this->apiRepo = $apiRepository;
@@ -28,12 +29,12 @@ class CachedGitUserRepository implements GitUserRepository
             if (empty($githubUserData)) {
                 $this->usersForApiRepo[] = $githubUser;
             } else {
-                $this->gitUserData[] = json_decode($githubUserData);
+                $this->gitUserData[] = new GitUser(json_decode($githubUserData));
             }
         }
-
         $this->fetchFromApiRepository($this->usersForApiRepo);
-        return $this->gitUserData;
+        $collection = new GitUserCollection($this->gitUserData);
+        return $collection;
     }
 
     public function fetchFromApiRepository($usersForApiRepo)

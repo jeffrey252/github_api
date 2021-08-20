@@ -19,7 +19,6 @@ class GithubController extends Controller
     {
         $data = $request->json()->all();
         $githubUsers = $this->repo->find($data['names']);
-        usort($githubUsers, fn ($a, $b) => strcmp($a->name, $b->name));
         return $githubUsers;
     }
 }
