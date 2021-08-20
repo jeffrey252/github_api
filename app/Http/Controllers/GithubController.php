@@ -18,23 +18,8 @@ class GithubController extends Controller
     public function view(Request $request)
     {
         $data = $request->json()->all();
-        return $this->repo->find($data['names']);
-        /*$url = 'https://api.github.com/users/';
-        $data = $request->all();
-
-        foreach($data['name'] AS $githubUser) {
-            $response = Http::get($url.$githubUser);
-            print_r($response->body());
-        }*/
-
-
-        /*$cachedData = Redis::get('github_' . $id);
-
-        if(isset($cachedData)) {
-            echo 'yayy';
-        } else {
-            Redis::set('github_' . $id, $data['name'][0]);
-            echo 'nuuu';
-        }*/
+        $githubUsers = $this->repo->find($data['names']);
+        usort($githubUsers, fn($a, $b) => strcmp($a->name, $b->name));
+        return $githubUsers;
     }
 }

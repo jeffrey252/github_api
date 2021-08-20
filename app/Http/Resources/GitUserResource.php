@@ -20,7 +20,7 @@ class GitUserResource extends JsonResource
             'company' => $this->company,
             'followers' => $this->followers,
             'public_repos' => $this->publicRepos,
-            'average_followers_per_public_repo' => $this->followers / $this->publicRepos,
+            'average_followers_per_public_repo' => $this->publicRepos ? $this->followers / $this->publicRepos : 0,
         ];
     }
 }
