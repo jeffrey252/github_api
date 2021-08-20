@@ -37,10 +37,17 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['api', 'single'],
             'ignore_exceptions' => false,
         ],
 
+        'api' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/laravel-api.log'),
+            'level' => 'info',
+            'bubble' => false,
+        ],
+        
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

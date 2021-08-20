@@ -29,8 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind(MemberRepository::class, CachedMemberRepository::class);
-        $this->app->bind(CacheRepository::class, RedisRepository::class);
-        $this->app->bind(Repository::class, ApiMemberRepository::class);
+        //
     }
 }

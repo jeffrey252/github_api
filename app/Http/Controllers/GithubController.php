@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use App\Repositories\Interfaces\MemberRepository;
+use App\Repositories\GitUsers\Interfaces\GitUserRepository;
 
 class GithubController extends Controller
 {
     protected $repo;
 
-    public function __construct(MemberRepository $memberRepo)
+    public function __construct(GitUserRepository $memberRepo)
     {
         $this->repo = $memberRepo;
     }
 
     public function view(Request $request)
     {
-        echo $this->repo->find('key');
+        $data = $request->all();
+        return $this->repo->find($data['names']);
         /*$url = 'https://api.github.com/users/';
         $data = $request->all();
 
