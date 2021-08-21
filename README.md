@@ -119,6 +119,7 @@ Access-Control-Allow-Origin: *
 
 {"access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTJmMGQ0MjBhNGNlNGZhMWJlYzYyODg1ZWEzNDVhMTYwZDE3ZTNiNTY2OTljMjBjZTg4MzYxZjEwODUzNGQwNzEzNjViMmVlZjY4NjllYmIiLCJpYXQiOjE2Mjk1MTI4MDcuNzM0MTMxLCJuYmYiOjE2Mjk1MTI4MDcuNzM0MTQsImV4cCI6MTY2MTA0ODgwNy42OTE1OTMsInN1YiI6IjIiLCJzY29wZXMiOltdfQ.xozPDwnq2-nnlM6MPYo8g232bt_n0OKkbMMNHDOOwirdducFURGIwSfmRWfJCOg_-aiLNozJ58OPZopkkWCbBPfDn2i-I-o2humEsoyvwXI45SQRjbG2wRIVGSOnd5oHMDjOUZ_esZqDBTtAcXltqIUp0n9C-x07LzfcTFmImVxVwXXjEc0RtGfontxkLTp5U6_8a0rckrVrdnd-YIPYRGVBdEUa7gYVs_0tAGl04h6tPPLDUFnTXZoRSkc6EKUvwSwlaTxHjaoTrFwbhdq7COlHKILSrnISwyjE7iYMXoZwnADzMB3DiSh_frZ_-J8jtHPGNnTmdyEdzt3vAjPsTX9KU7qW7ym9gVWDGg8MHBUEiMlxU1hvacXoUe0GSAXici_5cKpWpxdNztQndxUMRgncY3Vwcc_mxqSwcUmswBmFtEx3fCFOIOiWUKP8lTEvQEnA7y6OWfScUHVkw3w2tKcC05OYAxp34fiLf2P2tU6o4y1AQZl7VY8yp4Sw0hQKbWMI33pDiVb9LRyQkexUVhgIN7CI4KTo6UInliyMYa2VEXF-NDvgbTtMiI1Fp6S-bnfb4JtTmJ8hBjsyNlrL9oFuh4W6GM9i1tiGItBc29VV5Jeu6yqG-sHogW3Pv9d8IGWXEh1RqPhTmxJ9ve_bBCddjteOh-mmqZi7jVY1VqM","token_type":"Bearer","expires_at":"2022-08-21 02:26:47"}
 ```
+After successfully consuming the login endpoint, take note of the access_token as you will have to include this value on when accessing endpoints that require it. Add Authorization on your headers with the value "Bearer {the access_token}"
 
 ## User Logout
 
@@ -178,8 +179,7 @@ curl -i -H 'Accept: application/json' -H 'X-Requested-With: XMLHttpRequest' -H '
 ```
 HTTP/1.1 200 OK
 Server: nginx/1.21.1
-Content-Type: application/json
-Transfer-Encoding: chunked
+Content-Type: application/jsonTransfer-Encoding: chunked
 Connection: keep-alive
 X-Powered-By: PHP/7.4.22
 Cache-Control: no-cache, private
@@ -190,3 +190,13 @@ Access-Control-Allow-Origin: *
 
 [{"name":"Amanda Pickering","login":"amanda","company":null,"followers":32,"public_repos":39,"average_followers_per_public_repo":0.8205128205128205},{"name":"Jeff","login":"jeffrey252","company":null,"followers":0,"public_repos":2,"average_followers_per_public_repo":0}]
 ```
+
+# Hamming Distance
+
+For this challenge, I created basic endpoints for handling the request
+`GET /api/hamming/v1?x=1&x=4`
+`GET /api/hamming/v2?x=1&x=4`
+These endpoints should be viewable directly in the browser.
+
+The v1 endpoint mostly utilized built-in array and string functions from PHP while the v2 is a more manual approach.
+The v2 endpoint however has a bit of a more detailed output

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GithubController;
+use App\Http\Controllers\EtcController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -54,3 +55,6 @@ Route::fallback(function () {
         'message' => 'Endpoint not found.',
     ], 404);
 });
+
+Route::get('hamming/v1', [EtcController::class, 'index']);
+Route::get('hamming/v2', [EtcController::class, 'second']);
