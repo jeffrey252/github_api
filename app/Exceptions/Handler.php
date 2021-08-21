@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Predis\Connection\ConnectionException as RedisConnectionException;
+use Illuminate\Database\QueryException as DatabaseConnectionException;
 
 class Handler extends ExceptionHandler
 {
@@ -36,6 +38,18 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (RedisConnectionException $e, $request) {
+            return response()->json([
+                'message' => 'Our caching service is down. Please try again later'
+            ], 503);
+        });
+
+        $this->renderable(function (DatabaseConnectionException $e, $request) {
+            return response()->json([
+                'message' => 'Our database service is down. Please try again later'
+            ], 503);
         });
     }
 }
