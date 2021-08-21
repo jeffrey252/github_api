@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use App\Repositories\GitUsers\Interfaces\GitUserRepository;
 
 class GithubController extends Controller
@@ -15,11 +14,17 @@ class GithubController extends Controller
         $this->repo = $memberRepo;
     }
 
-    public function view(Request $request)
+    public function findUsers(Request $request)
     {
-        $data = $request->json()->all();
-        $githubUsers = $this->repo->find($data['names']);
-        usort($githubUsers, fn ($a, $b) => strcmp($a->name, $b->name));
+        $data = $request->all();
+        $usernames = explode(',', $data['names']);
+        $githubUsers = $this->repo->findGitUsers($usernames);
+        return $githubUsers;
+    }
+
+    public function findGitUsers(Request $request)
+    {
+        $githubUsers = $this->repo->findGitUsers($request->all());
         return $githubUsers;
     }
 }

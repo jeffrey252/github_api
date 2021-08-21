@@ -38,7 +38,19 @@ Route::middleware(['auth:api'])->group(function () {
 });
 
 Route::group([
-    'middleware' => (['auth:api', 'jsonbody', 'usernameLimit'])
+    'middleware' => (['auth:api', 'nameParameter', 'usernameLimit'])
 ], function () {
-    Route::get('github', [GithubController::class, 'view']);
+    Route::get('gusers', [GithubController::class, 'findUsers']);
+});
+
+Route::group([
+    'middleware' => (['auth:api', 'postUsernameLimit'])
+], function () {
+    Route::post('githubUsers', [GithubController::class, 'findGitUsers']);
+});
+
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Endpoint not found.',
+    ], 404);
 });
