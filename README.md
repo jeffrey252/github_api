@@ -179,8 +179,7 @@ curl -i -H 'Accept: application/json' -H 'X-Requested-With: XMLHttpRequest' -H '
 ```
 HTTP/1.1 200 OK
 Server: nginx/1.21.1
-Content-Type: application/json
-Transfer-Encoding: chunked
+Content-Type: application/jsonTransfer-Encoding: chunked
 Connection: keep-alive
 X-Powered-By: PHP/7.4.22
 Cache-Control: no-cache, private
@@ -191,3 +190,13 @@ Access-Control-Allow-Origin: *
 
 [{"name":"Amanda Pickering","login":"amanda","company":null,"followers":32,"public_repos":39,"average_followers_per_public_repo":0.8205128205128205},{"name":"Jeff","login":"jeffrey252","company":null,"followers":0,"public_repos":2,"average_followers_per_public_repo":0}]
 ```
+
+# Hamming Distance
+
+For this challenge, I created basic endpoints for handling the request
+`GET /api/hamming/v1?x=1&x=4`
+`GET /api/hamming/v2?x=1&x=4`
+These endpoints should be viewable directly in the browser.
+
+The v1 endpoint mostly utilized built-in array and string functions from PHP while the v2 is a more manual approach.
+The v2 endpoint however has a bit of a more detailed output
