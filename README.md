@@ -59,6 +59,19 @@ docker-compose exec app php artisan passport:install
 
 # API usage
 
+## API Logs
+
+You can view the API logs by accessing the app docker container
+```
+docker-compose exec app bash
+```
+The API log is saved in
+`var/www/storage/logs/laravel-api.log`
+
+```
+[2021-08-21 03:03:15] local.INFO: Github API called for user: jeffrey252
+[2021-08-21 03:03:17] local.INFO: Redis Cache accessed for user: jeffrey252
+```
 ## User Registration
 
 ### Request
