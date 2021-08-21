@@ -8,10 +8,13 @@ Git Users API is a simple project based on Laravel that provides an endpoint for
 
 ## Getting Started
 
+For ease of use, environment config file (.env) is included in the repository.
+
 ### Dependencies
 
 * Docker
 * Composer
+* PHP 7.4 +
 
 ### Installing
 
@@ -27,10 +30,11 @@ sudo chown -R $USER:$USER github_api
 ### Executing program
 
 ```
-composer install
+cd github_api
 ```
 ```
 docker-compose up -d
+composer install
 ```
 ```
 docker-compose exec app php artisan key:generate
@@ -41,7 +45,8 @@ Inside the db container
 ```
 mysql -u root -p
 ```
-Inside MySQL
+Password should be 'qwer1234'
+And then inside MySQL
 ```
 GRANT ALL ON github_api.* TO 'admin'@'%' IDENTIFIED BY 'qwer1234';
 FLUSH PRIVILEGES;
@@ -49,6 +54,7 @@ FLUSH PRIVILEGES;
 Exit from both MysQL and db container to migrate the database
 ```
 docker-compose exec app php artisan migrate
+docker-compose exec app php artisan passport:install
 ```
 
 ## Help
