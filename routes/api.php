@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GithubController;
 use App\Http\Controllers\EtcController;
+use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\MonthlyInstallmentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -58,3 +60,7 @@ Route::fallback(function () {
 
 Route::get('hamming/v1', [EtcController::class, 'index']);
 Route::get('hamming/v2', [EtcController::class, 'second']);
+
+
+Route::resource('salaries', SalaryController::class);
+Route::resource('monthlyInstallments', MonthlyInstallmentController::class);

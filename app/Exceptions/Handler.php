@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (DatabaseConnectionException $e, $request) {
             return response()->json([
-                'message' => 'Our database service is down. Please try again later'
+                'message' => $e->getMessage(),
             ], 503);
         });
     }
