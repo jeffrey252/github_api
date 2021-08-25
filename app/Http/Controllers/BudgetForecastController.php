@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Salary;
 use App\Models\MonthlyExpense;
+use App\Models\SingleExpense;
 use App\Models\MonthlyInstallment;
 
 class BudgetForecastController extends Controller
@@ -22,16 +23,23 @@ class BudgetForecastController extends Controller
         */
         $monthlyInstallments = MonthlyInstallment::where('user_id', $userId)->get();
         $monthlyExpensesData = MonthlyExpense::where('user_id', $userId)->get();
-        //$monthlyExpenses = MonthlyExpense::where('user_id', $userId)->sum('amount');
         $monthlyExpenses = $monthlyExpensesData->sum('amount')/100;
-
+        $singleExpenses = SingleExpense::where('user_id', $userId)->get();
         $salary = Salary::where('user_id', $userId)->firstOrFail();
 
-
+        $singleExpensesData = [];
+        foreach($singleExpenses AS $singleExpense) {
+            $d = new \DateTime($singleExpense->expense_date);
+            $d->modify('first day of this month');
+            if (isset($singleExpensesData[$d->format('Y-m-d')])) {
+                $singleExpensesData[$d->format('Y-m-d')] += $singleExpense->amount/100;
+            } else {
+                $singleExpensesData[$d->format('Y-m-d')] = $singleExpense->amount/100;
+            }
+        }
 
 
         //installments
-        $maxMonth = 0;
         foreach($monthlyInstallments AS &$monthlyInstallment) {
             $monthlyInstallment = $monthlyInstallment->format();
         }
@@ -52,10 +60,15 @@ class BudgetForecastController extends Controller
         $finalData = [];
         $data = [];
         $date = new \DateTime('first day of this month');
+        $date->modify('+1 month');
+
         $netIncome = 2200;
         for($x = 0; $x < $months; $x++) {
             $data['start'] = $netIncome;
             $expenses = $monthlyExpenses+$installmentsData[$x];
+            if(isset($singleExpensesData[$date->format('Y-m-d')])) {
+                $expenses += $singleExpensesData[$date->format('Y-m-d')];
+            }
             $data['expenses'] = $expenses;
             $data['salary'] = $salary->net_salary;
             $netIncome = $netIncome + $salary->net_salary - $expenses;
@@ -81,7 +94,7 @@ class BudgetForecastController extends Controller
         echo '</table>';
 
         echo '<h2>Budget Forecast</h2>';
-        echo '<table><tr><td>Date</td><td>Current</td><td>Income</td><td>Expenses</td><td>NetIncome</td></tr>';
+        echo '<table><tr><td>Date</td><td>Current</td><td>Income</td><td>Expenses</td><td>Net Income</td></tr>';
         foreach($finalData AS $key => $value) {
             echo '<tr><td>'.$key.'</td><td>'.$value['start'].'</td><td>'.$value['salary'].'</td><td>'.$value['expenses'].'</td><td>'.$value['net_income'].'</td></tr>';
         }

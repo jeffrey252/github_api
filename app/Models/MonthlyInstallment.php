@@ -26,7 +26,7 @@ class MonthlyInstallment extends Model
         $origin = new \DateTime($this->start_date);
         $target = new \DateTime();
         $interval = $origin->diff($target);
-        $this->remaining_months = $this->terms - ($interval->m + ($interval->y * 12));
+        $this->remaining_months = $this->terms - ($interval->m + ($interval->y * 12)) - 1;
         
         return $this;
     }
