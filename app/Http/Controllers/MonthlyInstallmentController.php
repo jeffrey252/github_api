@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MonthlyInstallment;
-use \DateTime;
 
 class MonthlyInstallmentController extends Controller
 {
@@ -40,13 +39,7 @@ class MonthlyInstallmentController extends Controller
      */
     public function show($userId)
     {
-        $monthlyInstallment = MonthlyInstallment::where('user_id', $userId)->firstOrFail();
-        $monthlyInstallment->amount /= 100;
-
-        $origin = new DateTime($monthlyInstallment->start_date);
-        $target = new DateTime();
-        $interval = $origin->diff($target);
-        $monthlyInstallment->remaining_months = $monthlyInstallment->terms - ($interval->m + ($interval->y * 12)) - 1;
+        $monthlyInstallment = MonthlyInstallment::where('user_id', $userId)->firstOrFail()->format();
         return $monthlyInstallment;
 
     }

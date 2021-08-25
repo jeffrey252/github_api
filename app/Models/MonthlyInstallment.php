@@ -18,4 +18,16 @@ class MonthlyInstallment extends Model
         'amount',
         'remaining_months',
     ];
+
+    public function format()
+    {
+        $this->amount /= 100;
+
+        $origin = new \DateTime($this->start_date);
+        $target = new \DateTime();
+        $interval = $origin->diff($target);
+        $this->remaining_months = $this->terms - ($interval->m + ($interval->y * 12)) - 1;
+        
+        return $this;
+    }
 }

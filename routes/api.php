@@ -8,6 +8,7 @@ use App\Http\Controllers\EtcController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\MonthlyInstallmentController;
 use App\Http\Controllers\MonthlyExpenseController;
+use App\Http\Controllers\BudgetForecastController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -66,3 +67,5 @@ Route::get('hamming/v2', [EtcController::class, 'second']);
 Route::resource('salaries', SalaryController::class);
 Route::resource('monthlyInstallments', MonthlyInstallmentController::class);
 Route::resource('monthlyExpenses', MonthlyExpenseController::class);
+
+Route::get('generate/{userId}/{months}', [BudgetForecastController::class, 'generateReport']);

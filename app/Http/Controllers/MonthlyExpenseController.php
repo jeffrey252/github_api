@@ -39,7 +39,7 @@ class MonthlyExpenseController extends Controller
      */
     public function show($userId)
     {
-        $monthlyExpense = MonthlyExpense::where('user_id', $userId)->firstOrFail();
+        $monthlyExpense = MonthlyExpense::where('user_id', $userId)->find();
         $monthlyExpense->amount /= 100;
 
         return $monthlyExpense;
